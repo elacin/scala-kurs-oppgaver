@@ -14,3 +14,4 @@ js/reveal.min.js
 .idea_modules/
 project/project/
 target/
+node_modules/
