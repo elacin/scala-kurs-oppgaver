@@ -1,7 +1,6 @@
 # SCALA KURS #
-### Jon-Anders Teigen
+## ~~Jon-Anders Teigen~~ Øyvind Raddum Berg 
 ### [Arktekk](http://arktekk.no)
-### [@jteigen](http://github.com/jteigen)
 
 ---
 
@@ -50,7 +49,7 @@ true false          // boolean
 '\u0041'            // unicode character
 """a multi
 line "string"
-"""                 // multiline escaped string
+<!--  -->"""                 // multiline escaped string
 <hello/>            // xml
 'alright            // symbol
 ```
