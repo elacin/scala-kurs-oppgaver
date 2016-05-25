@@ -3,7 +3,7 @@
 val length:String => Int =
   in => in.length
 
-def takesAFun(f:String => Int) = {
+def takesAFun(f: String => Int) = {
   val word = "Hello World"
   f(word)
 }
@@ -19,7 +19,7 @@ takesAFun(_.length)
 
 ## metoder ~= funksjoner
 ```scala
-def length(in:String) = in.length
+def length(in: String) = in.length
 
 takesAFun(length)
 ```
@@ -27,10 +27,10 @@ takesAFun(length)
 ---
 
 ```scala
-val noArg:() => Int =
+val noArg: () => Int =
   () => 10
 
-def takesNoArg(f:() => Int) = {
+def takesNoArg(f: () => Int) = {
   val anInt = f()
   5 + anInt
 }
@@ -51,7 +51,7 @@ def callByName(f: => Int) = {
 
 callByName(5)
 
-def callByNameIgnore(f: => Int){
+def callByNameIgnore(f: => Int): Int = {
   5 + 10
 }
 
@@ -63,7 +63,7 @@ callByNameIgnore(throw new Exception("who cares?"))
 
 ## parameter-set
 ```scala
-def multiple(name:String)(age:Int) {
+def multiple(name: String)(age: Int): Unit = {
   println(name + " is " + age + " years old")
 }
 
@@ -77,9 +77,9 @@ multiple("Mr Scala"){
 ---
 
 ```scala
-def debug(name:String)(expr: => String){
+def debug(name: String)(expr: => String): Unit = {
   val logger = Logger.getLogger(name)
-  if(logger.isDebugEnabled){
+  if (logger.isDebugEnabled){
     logger.debug(expr)	
   }
 }
@@ -93,9 +93,9 @@ debug("database"){
 
 ## partial application
 ```scala
-def printIt(name:String) = println("Look, its " + name)
+def printIt(name: String) = println("Look, its " + name)
 
-val partiallyApplied:String => Unit = printIt _
+val partiallyApplied: String => Unit = printIt _
 
 partiallyApplied("pretty cool")
 // Look, its pretty cool
@@ -106,7 +106,7 @@ partiallyApplied("pretty cool")
 ```scala
 val later = new ListBuffer[() => Unit]
 
-def register(f: => Unit){
+def register(f: => Unit): Unit = {
   later += f _
 }
 
@@ -130,11 +130,11 @@ java.lang.Exception: Oh noes
 ## traits
 ```scala
 trait Mult {
-  def mult(a:Int, b:Int) = a * b
+  def mult(a: Int, b: Int) = a * b
 }
 
 trait Add {
-  def add(a:Int, b:Int) = a + b
+  def add(a: Int, b: Int) = a + b
 }
 
 object Calc extends Mult with Add
@@ -147,22 +147,22 @@ Calc.mult(4, Calc.add(1, 2))
 ## stackable modifications ##
 ```scala
 trait Rule {
-  def convert(int:Int) = int.toString
+  def convert(int: Int) = int.toString
 }
 
 trait Fizz extends Rule {
-  override def convert(int:Int) =
-    if(int % 3 == 0) "Fizz" else super.convert(int)
+  override def convert(int: Int) =
+    if (int % 3 == 0) "Fizz" else super.convert(int)
 }
 
 trait Buzz extends Rule {
-  override def convert(int:Int) =
-    if(int % 5 == 0) "Buzz" else super.convert(int)
+  override def convert(int: Int) =
+    if (int % 5 == 0) "Buzz" else super.convert(int)
 }
 
 trait FizzBuzz extends Rule {
-  override def convert(int:Int) =
-    if(int % 3 == 0 && int % 5 == 0) "FizzBuzz"
+  override def convert(int: Int) =
+    if (int % 3 == 0 && int % 5 == 0) "FizzBuzz"
     else super.convert(int)
 }
 ```
@@ -192,10 +192,10 @@ object BuzzFizzTest extends Rule with FizzBuzz with Fizz with Buzz
 ## pattern matching & case classes
 ```scala
 sealed trait Tree
-case class Branch(left:Tree, right:Tree) extends Tree
-case class Leaf(value:Int) extends Tree
+case class Branch(left: Tree, right: Tree) extends Tree
+case class Leaf(value: Int) extends Tree
 
-def sum(tree:Tree):Int = tree match {
+def sum(tree:Tree): Int = tree match {
   case Branch(left, right) => sum(left) + sum(right)
   case Leaf(value) => value
 }
@@ -211,7 +211,7 @@ sum(tree)
 
 ## pattern matching og exceptions
 ```scala
-case class SomeException(why:String) extends Exception(why)
+case class SomeException(why: String) extends Exception(why)
 
 try{
   somethingThatCanThrowAnException()
@@ -233,8 +233,8 @@ a.k.a 'Enrich my Library'
 
 ## adapter pattern
 ```scala
-class PlusMinus(i:Int){
-  def +- (o:Int) = i-o to o+i
+class PlusMinus(i: Int) {
+  def +- (o: Int) = i-o to o+i
 }
 
 new PlusMinus(5) +- 2
@@ -245,7 +245,7 @@ new PlusMinus(5) +- 2
 
 ## implicit conversions
 ```scala
-implicit class PlusMinus(i:Int){
+implicit class PlusMinus(i: Int) {
   def +- (o:Int) = i-o to o+i
 }
 
@@ -256,11 +256,11 @@ implicit class PlusMinus(i:Int){
 ---
 
 ```scala
-class PlusMinus(i:Int){
-  def +- (o:Int) = i-o to o+i
+class PlusMinus(i: Int) {
+  def +- (o: Int) = i-o to o+i
 }
 
-implicit def plusMinus(i:Int) = new PlusMinus(int)
+implicit def plusMinus(i: Int) = new PlusMinus(int)
 
 5 +- 2
 //Range(3, 4, 5, 6, 7)

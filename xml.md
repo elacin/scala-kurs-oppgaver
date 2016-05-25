@@ -35,7 +35,7 @@
 ---
 
 ```scala
-case class Time(from:String, to:String, title:String, body:String)
+case class Time(from: String, to: String, title: String, body: String)
 
 val xml = XML.load(getClass.getResourceAsStream("forecast_hour_by_hour.xml"))
 

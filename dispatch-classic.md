@@ -43,10 +43,10 @@ http(request >>> System.out) // til OutputStream
 
 http(request as_str) // som string
 
-http(request <> ((xml:Elem) => xml \ "foo" \ "bar") // håndtert som xml
+http(request <> ((xml: Elem) => xml \ "foo" \ "bar") // håndtert som xml
 
 import tagsoup.TagSoupHttp._
-http(request </> ((xml:NodeSeq) => xml \\ "body" \ "@href") // vasket html og håndtert som xml
+http(request </> ((xml: NodeSeq) => xml \\ "body" \ "@href") // vasket html og håndtert som xml
 ```
 
 ---
@@ -64,7 +64,7 @@ import xml._
 import dispatch._
 
 val http = new Http
-def parse(xml:Elem) = 
+def parse(xml: Elem) =
   for {
     consignment <- xml \ "Consignment"
     totalweight <- consignment \ "TotalWeight"

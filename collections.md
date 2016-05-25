@@ -14,7 +14,7 @@
 
 ```scala
 trait Traversable[+A]{
-  def foreach[U](f:A => U):Unit	
+  def foreach[U](f: A => U): Unit
 }
 ```
 
@@ -23,7 +23,7 @@ trait Traversable[+A]{
 ## [Iterable](http://www.scala-lang.org/api/current/index.html#scala.collection.Iterable)
 ```scala
 trait Iterable[+A] extends Traversable[A]{
-  def iterator:Iterator[A]
+  def iterator: Iterator[A]
 }
 ```
 
@@ -39,9 +39,9 @@ trait Iterable[+A] extends Traversable[A]{
 
 ```scala
 trait Seq[+A] extends Iterable[A]{
-  def apply(idx:Int):A
-  def length:Int
-  def iterator:Iterator[A]
+  def apply(idx: Int):A
+  def length: Int
+  def iterator: Iterator[A]
 }
 ```
 
@@ -50,13 +50,13 @@ trait Seq[+A] extends Iterable[A]{
 ## companion objects m/magisk "apply"
 ```scala
 object List {
-  def apply[A](elems:A*):List[A] = ...
+  def apply[A](elems: A*): List[A] = ...
 }
 
 List(1, 2, 3)
 
 object Map {
-  def apply[A, B](elems:(A, B)*):Map[A, B] = ...
+  def apply[A, B](elems: (A, B)*): Map[A, B] = ...
 }
 
 Map(1 -> "a", 2 -> "b")
@@ -73,10 +73,10 @@ Map(1 -> "a", 2 -> "b")
 
 ```scala
 trait Set[A] extends Iterable[A] {
-  def +(elem:A):Set[A]
-  def -(elem:A):Set[A]
-  def contains(elem:A):Boolean
-  def iterator:Iterator[A]
+  def +(elem: A): Set[A]
+  def -(elem: A): Set[A]
+  def contains(elem: A): Boolean
+  def iterator: Iterator[A]
 }
 ```
 
@@ -85,10 +85,10 @@ trait Set[A] extends Iterable[A] {
 ## [Map](http://www.scala-lang.org/api/current/index.html#scala.collection.Map)
 ```scala
 trait Map[A, +B] extends Iterable[(A, B)]{
-  def +[B1 >: B](kv:(A, B1)):Map[A, B1]
-  def -(key:A):Map[A, B]
-  def get(key:A):Option[B]
-  def iterator:Iterator[A]
+  def +[B1 >: B](kv: (A, B1)): Map[A, B1]
+  def -(key: A): Map[A, B]
+  def get(key: A): Option[B]
+  def iterator: Iterator[A]
 }
 ```
 

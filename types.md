@@ -57,7 +57,7 @@ class SuperType
 class TheType extends SuperType
 class SubType extends TheType
 
-def x(theType:TheType){ ... }
+ def x(theType: TheType) = { ... }
 
 x(new SuperType) // ikke ok 
 x(new TheType)
@@ -68,12 +68,12 @@ x(new SubType)   // ok
 
 ## invariant ##
 ```scala
-class Invariant[A](a:A){
-  def get:A = a
-  def set(a:A){ ... }
+class Invariant[A](a: A) {
+  def get: A = a
+  def set(a: A): Unit = { ... }
 }
 
-def in(invariant:Invariant[TheType]){ ... }
+def in(invariant: Invariant[TheType]) = { ... }
 
 in(new Invariant[SuperType]) // ikke ok
 in(new Invariant[TheType])
@@ -84,12 +84,12 @@ in(new Invariant[SubType])   // ikke ok
 
 ## +covariant ##
 ```scala
-class Covariant[+A](a:A){
-  def get:A = a
-  def set(a:A){ ... } // ikke ok, contravariant position
+class Covariant[+A](a: A) {
+  def get: A = a
+  def set(a: A): Unit = { ... } // ikke ok, contravariant position
 }
 
-def co(covariant:Covariant[TheType]){ ... }
+def co(covariant: Covariant[TheType]) = { ... }
 
 co(new Covariant[SuperType]) // ikke ok
 co(new Covariant[TheType])
@@ -100,12 +100,12 @@ co(new Covariant[SubType])   // ok
 
 ## -contravariant ##
 ```scala
-class Contravariant[-A](a:A){
-  def get:A = a // ikke ok, covariant position
-  def set(a:A){ ... }
+class Contravariant[-A](a: A) {
+  def get: A = a // ikke ok, covariant position
+  def set(a: A): Unit { ... }
 }
 
-def contra(contravariant:Contravariant[TheType]){ ... }
+def contra(contravariant: Contravariant[TheType]) = { ... }
 
 contra(new Contravariant[SuperType]) // ok
 contra(new Contravariant[TheType]) 
@@ -132,14 +132,14 @@ A <: B // A subtype av B
 class Foo
 class Bar extends Foo 
   
-class Foos[F <: Foo](var init:F){
-  def set(f:F){ init = f }
+class Foos[F <: Foo](var init: F) {
+  def set(f: F): Unit = { init = f }
   def get = init
 }
   
 val bars = new Foos[Bar](new Bar)
 bars.set(new Bar)
-val f:Bar = bars.get
+val f: Bar = bars.get
 
 // found Foo, required Bar  
 bars.set(new Foo) 
@@ -165,11 +165,11 @@ class Foo
 class Bar extends Foo
 
 class Generator[F >: Bar]{
-  def next:F = new Bar
+  def next: F = new Bar
 }
 
 val gen = new Generator[Foo]
-val foo:Foo = gen.next
+val foo: Foo = gen.next
 ```
 
 ---
@@ -178,7 +178,7 @@ val foo:Foo = gen.next
 ```scala
 sealed trait Lst[A]
 case object Empty extends Lst[Nothing]
-case class Cons[A](head:A, tail:Lst[A]) extends Lst[A]
+case class Cons[A](head: A, tail: Lst[A]) extends Lst[A]
 
 Cons("Hello", Empty)
 ```
@@ -188,7 +188,7 @@ Cons("Hello", Empty)
 ```scala
 sealed trait Lst[A]
 case object Empty extends Lst[Nothing]
-case class Cons[A](head:A, tail:Lst[A]) extends Lst[A]
+case class Cons[A](head: A, tail: Lst[A]) extends Lst[A]
 
 Cons("Hello", Empty)
 ```
@@ -207,7 +207,7 @@ Cons("Hello", Empty)
 ```scala
 sealed trait Lst[+A] // ok, fixed it
 case object Empty extends Lst[Nothing]
-case class Cons[A](head:A, tail:Lst[A]) extends Lst[A]
+case class Cons[A](head: A, tail: Lst[A]) extends Lst[A]
 
 Cons("Hello", Empty)
 ```
@@ -216,10 +216,10 @@ Cons("Hello", Empty)
 
 ```scala
 sealed trait Lst[+A]{
-  def ::(a:A):Lst[A] = Cons(a, this)
+  def ::(a: A): Lst[A] = Cons(a, this)
 }
 case object Empty extends Lst[Nothing]
-case class Cons[A](head:A, tail:Lst[A]) extends Lst[A]
+case class Cons[A](head: A, tail: Lst[A]) extends Lst[A]
 
 // i bruk
 "Hello" :: Empty
@@ -229,14 +229,14 @@ case class Cons[A](head:A, tail:Lst[A]) extends Lst[A]
 
 ```scala
 sealed trait Lst[+A]{
-  def ::(a:A):Lst[A] = Cons(a, this)
+  def ::(a: A): Lst[A] = Cons(a, this)
 }
 case object Empty extends Lst[Nothing]
-case class Cons[A](head:A, tail:Lst[A]) extends Lst[A]
+case class Cons[A](head: A, tail: Lst[A]) extends Lst[A]
 
 /*
 covariant type A occurs in contravariant position in type A of value a
-     def ::(a:A):Lst[A] = Cons(a, this)
+     def ::(a: A): Lst[A] = Cons(a, this)
             ^
 */
 ```
@@ -245,11 +245,11 @@ covariant type A occurs in contravariant position in type A of value a
 
 ```scala
 sealed trait Lst[+A]{
-  def ::[B >: A](b:B):Lst[B] = Cons(b, this) // ok, fixed it
+  def ::[B >: A](b: B): Lst[B] = Cons(b, this) // ok, fixed it
 }
 case object Empty extends Lst[Nothing]
-case class Cons[A](head:A, tail:Lst[A]) extends Lst[A]
+case class Cons[A](head: A, tail: Lst[A]) extends Lst[A]
 
-val lst:Lst[String] = "Hello" :: Empty    
-val lst2:Lst[Any] = 1 :: "Hello" :: Empty
+val lst: Lst[String] = "Hello" :: Empty
+val lst2: Lst[Any] = 1 :: "Hello" :: Empty
 ```

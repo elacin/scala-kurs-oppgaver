@@ -27,7 +27,7 @@ Alle computations kjøres på en [ExecutionContext](http://www.scala-lang.org/ap
 import scala.concurrent._
 import ExecutionContext.Implicits.global
 
-val work:Future[Result] = Future {
+val work: Future[Result] = Future {
   ... // do heavy work returning Result
 }
 
@@ -44,7 +44,7 @@ work.onComplete{
 }
 
 work.onSuccess{ case result => ... }
-work.onFailure{ case ex:Exception => ... }
+work.onFailure{ case ex: Exception => ... }
 ```
 
 ---
@@ -52,10 +52,10 @@ work.onFailure{ case ex:Exception => ... }
 map, flatMap, filter, forEach og mye annet
 
 ```scala
-val fa:Future[Int] = ...
-def fb(a:A):Future[String] = ...
+val fa: Future[Int] = ...
+def fb(a: A): Future[String] = ...
 
-val x:Future[String] = for {
+val x: Future[String] = for {
   a <- fa
   b <- fb(a) if a > 10
 } yield b
@@ -66,9 +66,9 @@ val x:Future[String] = for {
 ## error recovery / exception handling
 
 ```scala
-val ok =  Future{ 2 / 0 } recover { case x:ArithmeticException => 0 }
+val ok =  Future{ 2 / 0 } recover { case x: ArithmeticException => 0 }
 
-for(r <- ok)
+for (r <- ok)
   println(r)
 // 0
 ```
@@ -78,10 +78,10 @@ for(r <- ok)
 ## zipping
 
 ```scala
-val fa:Future[A] = ...
-val fb:Future[B] = ...
+val fa: Future[A] = ...
+val fb: Future[B] = ...
 
-val fab:Future[(A, B)] = fa zip fb
+val fab: Future[(A, B)] = fa zip fb
 ```
 
 ---
@@ -89,9 +89,9 @@ val fab:Future[(A, B)] = fa zip fb
 ## sequencing
 
 ```scala
-val listOfFuture:List[Future[Int]] = ...
+val listOfFuture: List[Future[Int]] = ...
 
-val futureOfList:Future[List[Int]] = Future.sequence(listOfFuture)
+val futureOfList: Future[List[Int]] = Future.sequence(listOfFuture)
 
 ```
 
@@ -114,6 +114,6 @@ p.success(5)
 ```scala
 import scala.concurrent.duration._
 
-val f:Future[Int] = ...
-val i:Int = Await.result(f, 5.seconds)
+val f: Future[Int] = ...
+val i: Int = Await.result(f, 5.seconds)
 ```

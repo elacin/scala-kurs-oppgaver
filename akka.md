@@ -19,11 +19,11 @@
 ```scala
 import akka.actors._
 
-case class Message(msg:String)
+case class Message(msg: String)
 
 val system = ActorSystem()
 // ActorRef er en nettverkstransparent referanse til en actor
-val client:ActorRef = system.actorOf(Props[Client])
+val client: ActorRef = system.actorOf(Props[Client])
 
 // ! sender melding til en actor
 client ! Message("hi")

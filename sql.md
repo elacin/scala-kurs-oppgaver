@@ -59,7 +59,7 @@ Database.forURL("...") withSession {
 ## sqlτyped
 ```scala
 val q = sql("select name, age from person")
-val r:List[Int] = q() map (_ get "age") // List(36, 14)
+val r: List[Int] = q() map (_ get "age") // List(36, 14)
 
 q() map (_ get "salary")
 // error: No field String("salary") in record
