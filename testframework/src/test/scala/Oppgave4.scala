@@ -1,7 +1,6 @@
 import minitest._
 
 class Oppgave4 extends MiniTest {
-  /*
   test("fancy syntax"){
     3 + 2 === 5
   }
@@ -17,7 +16,6 @@ class Oppgave4 extends MiniTest {
   test("fancy not syntax fail"){
     3 + 2 !== 5
   }
- */
 }
 
 object RunOppgave4 extends Oppgave4 with App {
