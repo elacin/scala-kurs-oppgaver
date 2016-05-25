@@ -2,7 +2,10 @@ package web
 
 import org.eclipse.jetty.server.Server
 import javax.servlet.Servlet
-import org.eclipse.jetty.servlet.{ServletHolder, ServletContextHandler}
+
+import org.eclipse.jetty.servlet.{ServletContextHandler, ServletHolder}
+
+import scala.io.StdIn
 
 object WebServer {
 
@@ -13,9 +16,9 @@ object WebServer {
     context.addServlet(new ServletHolder(servlet), "/*")
     val server = new Server(8080)
     server.setHandler(context)
-    
+
     server.start()
-    Console.readLine()
+    StdIn.readLine()
     server.stop()
   }
 }

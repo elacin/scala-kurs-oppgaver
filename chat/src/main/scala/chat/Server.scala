@@ -4,7 +4,7 @@ import akka.actor._
 import com.typesafe.config.ConfigFactory
 
 object Server {
-  def main(args:Array[String]): Unit ={
+  def main(args: Array[String]): Unit = {
     val config = ConfigFactory.load("server-application")
     val system = ActorSystem("server-system", config)
     system.actorOf(Props[Server], "server")
@@ -12,26 +12,32 @@ object Server {
 }
 
 class Server extends Actor {
+
   import collection.mutable
 
-  val subscribers = mutable.Map[String, ActorRef]()
-  def reverse = subscribers.map(_.swap)
+  val subscribers: mutable.Map[String, ActorRef] =
+    mutable.Map[String, ActorRef]()
 
-  def broadcast(msg:String) = for(subscriber <- subscribers.values) subscriber ! StatusMessage(msg)
+  def reverse: mutable.Map[ActorRef, String] =
+    subscribers.map(_.swap)
 
-  def receive = {
+  def broadcast(msg: String): Unit =
+    for (subscriber <- subscribers.values)
+      subscriber ! StatusMessage(msg)
+
+  def receive: PartialFunction[Any, Unit] = {
     case Send(msg) =>
-      for{
+      for {
         nick <- reverse.get(sender())
         subscriber <- subscribers.values if subscriber != sender()
       } subscriber ! Message(nick, msg)
 
     case Subscribe(nick) =>
-      if(subscribers.isDefinedAt(nick)){
+      if (subscribers.isDefinedAt(nick)) {
         sender() ! NickTaken(nick)
       } else {
 
-        val msg = reverse.get(sender()).map{ existing =>
+        val msg = reverse.get(sender()).map { existing =>
           subscribers -= existing
           s"'$existing' is now known as '$nick'"
         }.getOrElse(s"everyone, please welcome '$nick'")
@@ -48,7 +54,7 @@ class Server extends Actor {
       }
 
     case Terminated(ref) =>
-      for(nick <- reverse.get(ref)) {
+      for (nick <- reverse.get(ref)) {
         subscribers -= nick
         broadcast(s"'$nick' left the server")
       }

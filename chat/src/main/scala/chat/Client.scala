@@ -1,8 +1,8 @@
 package chat
 
-import scala.concurrent.duration._
 import akka.actor._
 
+import scala.concurrent.duration._
 import scala.util.{Failure, Success}
 
 object Client {
@@ -11,12 +11,12 @@ object Client {
   val Exit    = "/exit"
   val Unknown = "/(.*)".r
 
-  def main(args:Array[String]): Unit ={
+  def main(args: Array[String]): Unit = {
     val system = ActorSystem("client-system")
     val client = system.actorOf(Props[Client])
 
     var loop = true
-    while(loop){
+    while (loop) {
       io.StdIn.readLine("! ").trim() match {
         case Server(server) => client ! Connect(server)
         case Exit           => loop = false
@@ -28,14 +28,15 @@ object Client {
     system.shutdown()
   }
 
-  case class Connect(server:String)
+  case class Connect(server: String)
+
 }
 
 class Client extends Actor {
   import collection.mutable
   import context.dispatcher
 
-  var nick = System.getProperty("user.name")
+  var nick    = System.getProperty("user.name")
   val servers = mutable.Set[ActorRef]()
 
   def receive = {
@@ -43,14 +44,14 @@ class Client extends Actor {
     case Client.Connect(server) =>
       val url = s"akka.tcp://server-system@$server:2552/user/server"
       val remote = context.actorSelection(url).resolveOne(5.seconds)
-      remote.onComplete{
+      remote.onComplete {
         case Success(r) =>
           servers += r
           r ! Subscribe(nick)
         case Failure(t) => t.printStackTrace()
       }
 
-    case Send(msg) => for(server <- servers) server ! Send(msg)
+    case Send(msg) => for (server <- servers) server ! Send(msg)
 
     // remote
     case Message(from, msg) => println(from + " :: " + msg)

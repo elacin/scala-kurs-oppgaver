@@ -1,20 +1,20 @@
 package music
 
-import org.scalatest.{FunSuite}
-
+import org.scalatest.FunSuite
 
 class Oppgave3Test extends FunSuite {
-  
-  test("Lyrics for Alt kan repeteres"){
-    val lyrics = Music.findLyrics("http://lyrics.wikia.com/Jokke_%26_Valentinerne:Alt_Kan_Repareres")
-    
-    def words(s:String) = s.split("\\W+").toSet
-    
+
+  test("Lyrics for Alt kan repeteres") {
+    val lyrics = Music.findLyrics(
+        "http://lyrics.wikia.com/Jokke_%26_Valentinerne:Alt_Kan_Repareres")
+
+    def words(s: String) = s.split("\\W+").toSet
+
     assert(words(lyrics) === words(altkanrepteres))
   }
 
   def altkanrepteres =
-"""All den dopen som jeg tok i går
+    """All den dopen som jeg tok i går
 Kommer ikke til å hjelpe meg når jeg våkner
 Forhåpentligvis i en seng
 
@@ -53,5 +53,5 @@ Alt kan repareres
 Alt kan repareres
 Alt kan repareres
 Alt kan repareres
-"""  
+"""
 }

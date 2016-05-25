@@ -1,5 +1,7 @@
 package web
 
+import java.util
+
 import org.scalatest.FunSuite
 import org.eclipse.jetty.server.Request
 import javax.servlet.http.HttpServletRequest
@@ -90,11 +92,15 @@ class ExtractorTest extends FunSuite {
     import collection.JavaConverters._
     val headers = Map("Accept" -> Seq("text/html", "application/xhtml+xml"))
     
-    val request:HttpServletRequest = new Request{
-      override def getHeaders(name: String) = headers.get(name).flatten.iterator.asJavaEnumeration
-      override def getHeaderNames = headers.keysIterator.asJavaEnumeration
-      override def getHeader(name: String) = headers.get(name).flatMap(_.headOption).orNull
-    }
+    val request: HttpServletRequest =
+      new Request{
+        override def getHeaders(name: String): util.Enumeration[String] =
+          headers.get(name).iterator.flatten.asJavaEnumeration
+        override def getHeaderNames =
+          headers.keysIterator.asJavaEnumeration
+        override def getHeader(name: String) =
+          headers.get(name).flatMap(_.headOption).orNull
+      }
     
     request match {
     //  case Headers(h) => h should be === headers
