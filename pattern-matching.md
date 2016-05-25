@@ -44,7 +44,7 @@ public int f(List<List<Integer>> l){
 ---
 
 ```scala
-def f(l:List[List[Int]]) = l match {
+def f(l: List[List[Int]]) = l match {
   case List(List(x @ (1 | 2 | 3), _*), _*) => x
   case List(_, List(_, x, _*),_*) => x
   case _ => 0
@@ -74,12 +74,12 @@ x match {
 ## typed ##
 ```scala
 x match {
-  case _:Foo =>
-  case a:C =>
-  case b:p.C =>
-  case c:T#C =>
-  case d:Singleton.type => 
-  case e:(A with B with C) =>
+  case _: Foo =>
+  case a: C =>
+  case b: p.C =>
+  case c: T#C =>
+  case d: Singleton.type =>
+  case e: (A with B with C) =>
 }
 ```
 
@@ -154,7 +154,7 @@ val Hello = "hello"
 
 ## stable identifier ##
 ```scala
-def f(x:Int, y:Int) = x match {
+def f(x: Int, y: Int) = x match {
   case `y` =>
 }
 ```
@@ -163,7 +163,7 @@ def f(x:Int, y:Int) = x match {
 
 ## constructor ##
 ```scala
-case class Foo(a:String, b:Int)
+case class Foo(a: String, b: Int)
 
 x match {
   case Foo(aString, anInt) =>
@@ -174,7 +174,7 @@ x match {
 
 ## constructor ##
 ```scala
-case class Foo(a:String, b:Int)
+case class Foo(a: String, b: Int)
 
 x match {
   case Foo("Hello", 5) =>
@@ -187,10 +187,10 @@ x match {
 ## Algebraiske Data Typer ##
 ```scala
 sealed trait Tree
-case class Branch(l:Tree, r:Tree) extends Tree
-case class Leaf(v:Int) extends Tree
+case class Branch(l: Tree, r: Tree) extends Tree
+case class Leaf(v: Int) extends Tree
 
-def sum(t:Tree):Int = t match {
+def sum(t: Tree): Int = t match {
   case Branch(l, r) => sum(l) + sum(r)
   case Leaf(v) => v
 }
@@ -243,11 +243,11 @@ x match {
 
 ## extractors ##
 ```scala
-def unapply(a:A):Boolean
+def unapply(a: A): Boolean
 
-def unapply(a:A):Option[B]
+def unapply(a: A): Option[B]
 
-def unapplySeq(a:A):Option[Seq[B]]
+def unapplySeq(a: A): Option[Seq[B]]
 ```
 
 ---
@@ -255,7 +255,7 @@ def unapplySeq(a:A):Option[Seq[B]]
 ## unapply ##
 ```scala
 object Empty {
-  def unapply(a:String):Boolean = a.trim.size == 0
+  def unapply(a: String): Boolean = a.trim.size == 0
 }
 
 x match {
@@ -268,7 +268,7 @@ x match {
 ## unapply ##
 ```scala
 object Even {
-  def unapply(a:Int):Option[Int] =
+  def unapply(a: Int): Option[Int] =
     if(a % 2 == 0) Some(a) else None
 }
 
@@ -282,14 +282,14 @@ x match {
 ```java
 class Name{
   String first; String last;
-  public Name(first:String, last:String){
+  public Name(first: String, last: String){
     this.first = first; this.last = last;	
   }
 }
 ```
 ```scala
 object FirstLast {
-  def unapply(name:Name):Option[(String, String)] = 
+  def unapply(name: Name): Option[(String, String)] =
     Some(name.first, name.last)
 }
 
@@ -303,7 +303,7 @@ object FirstLast {
 ## unapplySeq ##
 ```scala
 object Csv {
-  def unapplySeq(s:String) = Some(s.split(",").toSeq)
+  def unapplySeq(s: String) = Some(s.split(",").toSeq)
 }
 
 "1,2,3" match {
@@ -317,18 +317,18 @@ object Csv {
 ```scala
 sealed trait Tree
 object Branch {
-  private class Impl(val l:Tree, r:Tree) extends Tree
-  def apply(l:Tree, r:Tree):Tree = new Impl(l, r)
-  def unapply(t:Tree) = t match {
-    case i:Impl => Some(i.l, i.r)
+  private class Impl(val l: Tree, r: Tree) extends Tree
+  def apply(l: Tree, r: Tree): Tree = new Impl(l, r)
+  def unapply(t: Tree) = t match {
+    case i: Impl => Some(i.l, i.r)
     case _ => None	
   }
 }
 object Leaf {
-  private class Impl(val v:Int) extends Tree
-  def apply(v:Int):Tree = new Impl(v)
-  def unapply(t:Tree) = t match {
-    case i:Impl => Some(i.v)
+  private class Impl(val v: Int) extends Tree
+  def apply(v: Int): Tree = new Impl(v)
+  def unapply(t: Tree) = t match {
+    case i: Impl => Some(i.v)
     case _ => None	
   }
 }
@@ -337,7 +337,7 @@ object Leaf {
 ---
 
 ```scala
-def sum(tree:Tree):Int = tree match {
+def sum(tree: Tree): Int = tree match {
   case Branch(left, right) => sum(left) + sum(right)
   case Leaf(value) => value
 }
@@ -347,7 +347,7 @@ def sum(tree:Tree):Int = tree match {
 
 ## infix ##
 ```scala
-case class XX(a:String, b:Int)
+case class XX(a: String, b: Int)
 
 x match {
   case a XX b =>
@@ -358,8 +358,8 @@ x match {
 
 ## infix ##
 ```scala
-case class ::[A](head:A, tail:List[A]) extends List[A] {
-  def ::[B >: A](b:B):List[B] = ::(b, this)
+case class ::[A](head: A, tail: List[A]) extends List[A] {
+  def ::[B >: A](b: B): List[B] = ::(b, this)
 }
 
 (1 :: 2 :: 3 :: Nil) match {
@@ -371,8 +371,8 @@ case class ::[A](head:A, tail:List[A]) extends List[A] {
 
 ## infix ##
 ```scala
-case class ::[A](head:A, tail:List[A]) extends List[A] {
-  def ::[B >: A](b:B):List[B] = ::(b, this)
+case class ::[A](head: A, tail: List[A]) extends List[A] {
+  def ::[B >: A](b: B): List[B] = ::(b, this)
 }
 
 (1 :: 2 :: 3 :: Nil) match {
@@ -385,7 +385,7 @@ case class ::[A](head:A, tail:List[A]) extends List[A] {
 ## infix ##
 ```scala
 object -> {
-  def unapply[A, B](ab:(A, B)):Option[(A, B)] =
+  def unapply[A, B](ab: (A, B)): Option[(A, B)] =
 	Some(ab)
 }
 
@@ -402,7 +402,7 @@ object -> {
 
 ## infix ##
 ```scala
-case class EX(l:List[String], num:Int, s:String)
+case class EX(l: List[String], num: Int, s: String)
 
 x match {
   case l EX (num, s) => 
@@ -413,7 +413,7 @@ x match {
 
 ## infix ##
 ```scala
-case class EX(l:List[String], num:Int, s:String)
+case class EX(l: List[String], num: Int, s: String)
 
 x match {
   case a :: b :: c EX (num, s) => 
@@ -426,7 +426,7 @@ x match {
 ```scala
 x match {
   case 1 | 2 =>
-  case _:Foo | _:Bar =>
+  case _: Foo | _: Bar =>
 }
 ```
 
@@ -437,7 +437,7 @@ x match {
 try {
   // throw something
 } catch {
-  case e @ (_:ExA | _:ExB) => // multicatch
+  case e @ (_: ExA | _: ExB) => // multicatch
 }
 ```
 
@@ -463,7 +463,7 @@ x match {
 
 ## partial functions ##
 ```scala
-val pos:PartialFunction[Int, String] = {
+val pos: PartialFunction[Int, String] = {
   case n if n > 0 => n.toString
 }
 
@@ -478,11 +478,11 @@ pos(-1) // java.util.NoSuchElementException
 
 ## partial functions ##
 ```scala
-val pos:PartialFunction[Int, String] = {
+val pos: PartialFunction[Int, String] = {
   case n if n > 0 => n.toString
 }
 
-val notPos:PartialFunction[Int, String] = {
+val notPos: PartialFunction[Int, String] = {
   case n if n <= 0 => "Not positive"
 }
 
@@ -527,7 +527,7 @@ val EMail(name, domain) = "foo@bar.com"
 ## for-comprehensions ##
 ```scala
 object Even {
-  def unapply(i:Int) = 
+  def unapply(i: Int) =
     if(i % 2 == 0) Some(i) else None
 }
 
@@ -540,11 +540,11 @@ for{
 
 ## erasure ##
 ```scala
-val list:List[Any] = List(1, 2, 3)
+val list: List[Any] = List(1, 2, 3)
 
 list match {
-  case x:List[String] => "Strings" // matcher
-  case x:List[Int] => "Ints"
+  case x: List[String] => "Strings" // matcher
+  case x: List[Int] => "Ints"
 }
 ```
 
@@ -552,7 +552,7 @@ list match {
 
 ## don't ##
 ```scala
-val a:Option[Int] = ...
+val a: Option[Int] = ...
 
 a match {
   case Some(i) => Some(i * 2)
@@ -564,7 +564,7 @@ a match {
 
 ## do ##
 ```scala
-val a:Option[Int] = ...
+val a: Option[Int] = ...
 
 a.map(i => i * 2)
 ```
@@ -573,8 +573,8 @@ a.map(i => i * 2)
 
 ## don't ##
 ```scala
-val a:Option[String] = ...
-val b:Option[String] = ...
+val a: Option[String] = ...
+val b: Option[String] = ...
 
 (a, b) match {
   case (Some(hello), Some(world)) => Some(hello + " " + world)
@@ -586,8 +586,8 @@ val b:Option[String] = ...
 
 ## do ##
 ```scala
-val a:Option[String] = ...
-val b:Option[String] = ...
+val a: Option[String] = ...
+val b: Option[String] = ...
 
 for{
   hello <- a

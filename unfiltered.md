@@ -65,7 +65,7 @@ trait Responder[+R] {
 ## Plan
 ```scala
 trait Plan extends Filter {
-  def intent:Intent[HttpServletRequest, HttpServletResponse]
+  def intent: Intent[HttpServletRequest, HttpServletResponse]
 
   def doFilter(request: ServletRequest,
                response: ServletResponse,

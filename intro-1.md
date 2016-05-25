@@ -1,5 +1,5 @@
 # SCALA KURS #
-## ~~Jon-Anders Teigen~~ Øyvind Raddum Berg 
+## ~~Jon-Anders Teigen~~ Øyvind Raddum Berg
 ### [Arktekk](http://arktekk.no)
 
 ---
@@ -49,7 +49,7 @@ true false          // boolean
 '\u0041'            // unicode character
 """a multi
 line "string"
-<!--  -->"""                 // multiline escaped string
+<!--  -->"""        // multiline escaped string
 <hello/>            // xml
 'alright            // symbol
 ```
@@ -57,7 +57,7 @@ line "string"
 ---
 
 ## variabler ##
-```scala	
+```scala
 var foo = 5
 foo = 6
 
@@ -72,14 +72,14 @@ var foo:Int = 5
 val x = "Hello"
 
 // eksplisitt typet
-val x:String = "Hello"
+val x: String = "Hello"
 ```
 
 ---
 
 ## metode ##
 ```scala
-def foo:Int = {
+def foo: Int = {
   return 5
 }
 ```
@@ -88,7 +88,7 @@ def foo:Int = {
 
 ## metode ##
 ```scala
-def foo:Int = {
+def foo: Int = {
   5
 }
 
@@ -119,7 +119,7 @@ def foo = 5
 
 ## void/Unit metoder ##
 ```scala
-def something(i:Int):Unit = {
+def something(i: Int): Unit = {
   println("Do " + i)
 }
 ```
@@ -128,7 +128,7 @@ def something(i:Int):Unit = {
 
 ## void/Unit metoder (deprecated) ##
 ```scala
-def something(i:Int) {
+def something(i: Int) {
   println("Do " + i)
 }
 
@@ -151,7 +151,7 @@ def printSomething() = {
 ## nøstet definisjon ##
 ```scala
 val nesting = {
-  def plus(a:Int, b:Int) = a + b
+  def plus(a: Int, b: Int) = a + b
   val x = {
     val y = 5 - 3
     y - 2	
@@ -238,7 +238,7 @@ class Person {
 ## object / class ##
 ```scala
 object Person {
-  def create30(name:String) = new Person(name, 30)
+  def create30(name: String) = new Person(name, 30)
 }
 
 class Person(val name: String, var age: Int){
@@ -258,7 +258,7 @@ class Person(private val _name: String,
 
   def age = _age	
 
-  def age_=(a:Int){
+  def age_=(a: Int){
     _age = a	
   }
 }
@@ -342,7 +342,7 @@ val prepended = 1 +: appended
 ## imperative vs functional 
 
 ```scala
-case class Person(name:String, age:Int)
+case class Person(name: String, age: Int)
 
 val people = List(Person("kid-a", 10),
                   Person("kid-b", 12),
@@ -382,7 +382,7 @@ val kids = people.filter(person => person.age < 18)
 ---
 
 ```scala
-case class Owner(pets:List[String])
+case class Owner(pets: List[String])
 val owners = List(Owner(List("Dog", "Cat")),
                   Owner(List("Fish")))
 
@@ -426,15 +426,15 @@ val dropped = list.drop(5)
 
 case class Person(fornavn:String, etternavn:String)
 
-val personer:List[Person] = ...
+val personer: List[Person] = ...
 
-val familier:Map[String, List[Person]] =
+val familier: Map[String, List[Person]] =
   personer.groupBy(_.etternavn)
 
-val fornavn:Map[String, List[String]] = 
+val fornavn: Map[String, List[String]] =
   familier.mapValues(personer => personer.map(_.fornavn))
 
-val sortert:Seq[(String, List[String])] =
+val sortert: Seq[(String, List[String])] =
   fornavn.toSeq.sortBy(_._1.size)
 ```
 
@@ -485,14 +485,14 @@ map(0) // java.util.NoSuchElementException
 
 ```scala
 trait Option[+A] {
-  def get:A // eller java.util.NoSuchElementException
-  def getOrElse(a:A):A
-  def map(f:A => B):Option[B]
-  def flatMap(f:A => Option[B]):Option[B]
+  def get: A // eller java.util.NoSuchElementException
+  def getOrElse(a: A): A
+  def map(f: A => B): Option[B]
+  def flatMap(f: A => Option[B]): Option[B]
 }
 
 object None extends Option[Nothing]
-case class Some[A](value:A) extends Option[A]
+case class Some[A](value: A) extends Option[A]
 ```
 
 ---

@@ -57,6 +57,6 @@ Http(request OK as.String) //200 range, eller Failure
 
 Http(request > as.String) //aksepterer alle
 
-def f(r:Response) = ...
+def f(r: Response) = ...
 Http(request > f) //bruk min egen funksjon
 ```

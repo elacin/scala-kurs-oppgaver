@@ -37,7 +37,7 @@ object Set extends SetFactory[Set] {
   implicit def canBuildFrom[A]: CanBuildFrom[Coll, A, Set[A]] = setCanBuildFrom[A]
 }
 
-val b2:BitSet = BitSet(1, 2, 3).map(i => i * 2)
+val b2: BitSet = BitSet(1, 2, 3).map(i => i * 2)
 val Set[String] = b2.map(i => i.toString)
 ```
 
@@ -64,18 +64,19 @@ import collection.LinearSeqOptimized
 import collection.generic.{GenericTraversableTemplate, SeqFactory}
 
 object Lst extends SeqFactory[Lst] {
-  def newBuilder[A]: Builder[A, Lst[A]] = new Builder[A, Lst[A]] {
-    private[this] var lst: Lst[A] = Empty
+  def newBuilder[A]: Builder[A, Lst[A]] =
+    new Builder[A, Lst[A]] {
+      private[this] var lst: Lst[A] = Empty
 
-    def +=(elem: A) = {
-      lst = Cons(elem, lst)
-      this
+      def +=(elem: A) = {
+        lst = Cons(elem, lst)
+        this
+      }
+
+      def clear() { lst = Empty }
+
+      def result() = lst
     }
-
-    def clear() { lst = Empty }
-
-    def result() = lst
-  }
 }
 
 ```

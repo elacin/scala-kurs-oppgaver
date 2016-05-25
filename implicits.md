@@ -29,11 +29,11 @@ Thou shalt only use implicit conversions for one of two (2) reasons:
 1. Pimping members onto an existing type
 
 ```scala
-class StringOps(s:String){
+class StringOps(s: String){
   def toInt = java.lang.Integer.parseInt(s)
 }
 
-implicit def augmentString(s:String):StringOps = new StringOps(s)
+implicit def augmentString(s: String): StringOps = new StringOps(s)
 
 val i = "543".toInt
 
@@ -44,7 +44,7 @@ val i = "543".toInt
 
 #implicit classes
 ```scala
-implicit class StringOps(s:String){
+implicit class StringOps(s: String){
   def toInt = java.lang.Integer.parseInt(s)
 }
 ```
@@ -59,7 +59,7 @@ implicit class StringOps(s:String){
 type List[+A] = collection.immutable.List[A]
 type Pair[+A, +B] = Tuple2[A, B]
 
-implicit def augmentString(s:String):StringOps = new StringOps(s)
+implicit def augmentString(s: String): StringOps = new StringOps(s)
 
 final class ArrowAssoc[A](val x: A) {
   @inline def -> [B](y: B): Tuple2[A, B] = Tuple2(x, y)
@@ -81,7 +81,7 @@ inspiser implicits i scope med REPL
 
 ```scala
 object Runnables {
-  implicit def function2Runnable(f:() => Unit) = new Runnable{
+  implicit def function2Runnable(f: () => Unit) = new Runnable{
     def run() { f() }
   }
 }
@@ -104,9 +104,9 @@ implicit conversions mellom scala og java collections
 ```scala
 import collection.JavaConversions._
 
-val list:java.util.List[String] = Seq("hello", "world")
+val list: java.util.List[String] = Seq("hello", "world")
 
-val seq:Seq[String] = list
+val seq: Seq[String] = list
 ```
 
 ---
@@ -117,9 +117,9 @@ val seq:Seq[String] = list
 ```scala
 import collection.JavaConverters._
 
-val list:java.util.List[String] = Seq("Hello", "World").asJava
+val list: java.util.List[String] = Seq("Hello", "World").asJava
 
-val seq:Seq[String] = list.asScala
+val seq: Seq[String] = list.asScala
 ```
 
 ---
@@ -135,7 +135,7 @@ val seq:Seq[String] = list.asScala
 ```scala
 implicit val msg = "Hello"
 
-def sayHello(s:String)(implicit m:String) = m + " " + s
+def sayHello(s: String)(implicit m: String) = m + " " + s
 
 sayHello("World")
 
@@ -157,7 +157,7 @@ ordering.compare(1, 2)
 
 ```scala
 // implementasjon
-def implicitly[A](implicit a:A):A = a
+def implicitly[A](implicit a: A): A = a
 ```
 
 ---
@@ -168,14 +168,14 @@ def implicitly[A](implicit a:A):A = a
 
 ```scala
 object Min {
-  def min[A <% Ordered[A]](a1:A, a2:A) = 
+  def min[A <% Ordered[A]](a1: A, a2: A) =
     if(a1 < a2) a1 else a2
 
   // sukker for
-  def min[A](a1:A, a2:A)(implicit ev:A => Ordered[A]) = ...
+  def min[A](a1: A, a2: A)(implicit ev: A => Ordered[A]) = ...
 }
 
-case class Num(i:Int)
+case class Num(i: Int)
   
 Min.min(Num(1), Num(2))
 
@@ -192,17 +192,17 @@ Min.min(Num(1), Num(2))
 
 ```scala
 object Min {
-  def min[A : Ordering](a1:A, a2:A) =
+  def min[A : Ordering](a1: A, a2: A) =
     if(implicitly[Ordering[A]].lt(a1, a2)) a1 else a2
 
   // sukker for
-  def min[A](a1:A, a2:A)(implicit ev:Ordering[A]) = ...
+  def min[A](a1: A, a2: A)(implicit ev: Ordering[A]) = ...
 }
 
 Min.min(Num(1), Num(2))
 
 // veldig fin for å kalle videre..
-def min2[A : Ordering](a1:A, a2:A) = Min.min(a1, a2)
+def min2[A : Ordering](a1: A, a2: A) = Min.min(a1, a2)
 ```
 
 ---
@@ -211,8 +211,8 @@ def min2[A : Ordering](a1:A, a2:A) = Min.min(a1, a2)
 * bruk typesystemet til å bevise ting
 
 ```scala
-class Foo[A](a:A){
-  def int(implicit ev:A =:= Int):Int = a 
+class Foo[A](a: A){
+  def int(implicit ev: A =:= Int): Int = a
 }
 
 new Foo(0).int
@@ -228,18 +228,18 @@ new Foo("Hello").int
 * påkrevd for instansiering av Arrays
 
 ```scala
-def newInstance[A](implicit c:reflect.ClassTag[A]):A = 
+def newInstance[A](implicit c: reflect.ClassTag[A]): A =
   manifest.runtimeClass.asInstanceOf[Class[A]].newInstance
 	
 newInstance[java.util.ArrayList[String]]
 
 
 object Array {
-  def apply(elms:A*)[A : ClassManifest]:Array[A] = ...
+  def apply(elms: A*)[A: ClassManifest]: Array[A] = ...
 }
 
-def create[A](a:A) = Array(a)            // kompilerer ikke
-def create[A : ClassTag](a:A) = Array(a) // ok
+def create[A](a: A) = Array(a)            // kompilerer ikke
+def create[A: ClassTag](a: A) = Array(a) // ok
 ```
 
 ---
@@ -247,11 +247,11 @@ def create[A : ClassTag](a:A) = Array(a) // ok
 ## not found ##
 ```scala
 trait Msg[A]{
-  def msg(a:A)
+  def msg(a: A)
 }
 
 object MittApi {
-  def needsMsg[A : Msg](a:A){ ... }
+  def needsMsg[A: Msg](a: A){ ... }
 }
 
 // brukers kode
@@ -272,11 +272,11 @@ import annotation.implicitNotFound
 
 @implicitNotFound("Du må definere/importere en implicit instans av Msg[${A}]")
 trait Msg[A]{
-  def msg(a:A)
+  def msg(a: A)
 }
 
 object MittApi {
-  def needsMsg[A : Msg](a:A){ ... }
+  def needsMsg[A: Msg](a: A){ ... }
 }
 
 // brukers kode
@@ -313,9 +313,9 @@ Du må definere/importere en implicit instans av Msg[java.lang.String]
 ## java.util.Comparator som type class ##
 ```scala
 implicit object IntComparator extends java.util.Comparator[Int]{
-  def compare(a:Int, b:Int) = a - b 
+  def compare(a: Int, b: Int) = a - b
 }
-def myCompare[T](a:T, b:T)(implicit comarator:java.util.Comparator[Int]) = 
+def myCompare[T](a: T, b: T)(implicit comarator: java.util.Comparator[Int]) =
   comparator.compare(a, b)
 
 myCompare(1,2)
@@ -329,8 +329,8 @@ myCompare("Hello", "World")
 
 ## parametere og conversions kombinert ##
 ```scala
-implicit class Syntax[A](a:A){
-  def === (other:A)(implicit c:java.util.Comparator[A]) = 
+implicit class Syntax[A](a: A){
+  def === (other: A)(implicit c: java.util.Comparator[A]) =
     c.compare(a, other) == 0
 }
 
