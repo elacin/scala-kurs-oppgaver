@@ -1,5 +1,5 @@
 # SCALA KURS #
-## ~~Jon-Anders Teigen~~ Øyvind Raddum Berg
+## Øyvind Raddum Berg
 ### [Arktekk](http://arktekk.no)
 
 ---
@@ -29,7 +29,6 @@
 ## *Ladies and gentlemen, start your engines..* ##
 * [IntelliJ](http://www.jetbrains.com/idea/) / [Eclipse](http://scala-ide.org/)
 * [SBT](http://www.scala-sbt.org/)
-* [Git](http://help.github.com/win-set-up-git/)
 * [https://github.com/arktekk/scala-kurs-oppgaver](https://github.com/arktekk/scala-kurs-oppgaver)
 
 ---
