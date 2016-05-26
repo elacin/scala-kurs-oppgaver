@@ -1,6 +1,7 @@
 import minitest._
 
 class Oppgave5 extends MiniTest {
+  /*
   var i = 0
 
   before {
@@ -22,6 +23,7 @@ class Oppgave5 extends MiniTest {
     // 0 + 5 + 10 + 5 == 20
     assertEq(i, 20)
   }
+ */
 }
 
 object RunOppgave5 extends Oppgave5 with App {
