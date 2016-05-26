@@ -33,6 +33,8 @@
 
 ---
 
+## literals
+
 ```scala
 "hello"             // string
 true false          // boolean

@@ -1,6 +1,32 @@
 # CanBuildFrom ??? #
 ```scala
-def map [B, That](f: (A) ⇒ B)(implicit bf: CanBuildFrom[Set[A], B, That]): That
+def map[B, That](f: (A) ⇒ B)
+                (implicit bf: CanBuildFrom[Set[A], B, That]): That
+```
+
+---
+
+## [usecase] vs full ##
+
+```scala
+trait Set[A]{
+  def map[B](f: (A) ⇒ B): Set[B] // [use case]
+
+  def map[B, That](f: (A) ⇒ B)(implicit bf: CanBuildFrom[Set[A], B, That]): That
+}
+```
+
+---
+
+# Motivasjon #
+```scala
+val bs: BitSet = BitSet(1, 2, 3).map(i => i * 2)
+val ss: SortedSet[String] = bs.map(i => i.toString)
+```
+```scala
+val m: Map[Int, String] = Map(1 → "test")
+val i: Iterable[String] = m.map(t ⇒ t._2)
+
 ```
 
 ---
@@ -35,20 +61,6 @@ object BitSet extends BitSetFactory[BitSet] {
 object Set extends SetFactory[Set] {
   def newBuilder[A] = immutable.Set.newBuilder[A]
   implicit def canBuildFrom[A]: CanBuildFrom[Coll, A, Set[A]] = setCanBuildFrom[A]
-}
-
-val b2: BitSet = BitSet(1, 2, 3).map(i => i * 2)
-val Set[String] = b2.map(i => i.toString)
-```
-
----
-
-## [usecase] vs full ##
-```scala
-trait Set[A]{
-  def map [B](f: (A) ⇒ B): Set[B] // [use case] 
-
-  def map [B, That](f: (A) ⇒ B)(implicit bf: CanBuildFrom[Set[A], B, That]): That
 }
 ```
 

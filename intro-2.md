@@ -175,16 +175,16 @@ trait FizzBuzz extends Rule {
 
 ```scala
 object FizzTest extends Rule with Fizz
-(0 to 15).foreach(FizzTest.convert)
+(0 to 15).map(FizzTest.convert).foreach(println)
 
 object BuzzTest extends Rule with Buzz
-(0 to 15).foreach(BuzzTest.convert)
+(0 to 15).map(BuzzTest.convert).foreach(println)
 
 object FizzBuzzTest extends Rule with Fizz with Buzz with FizzBuzz
-(0 to 15).foreach(FizzBuzzTest.convert)
+(0 to 15).map(FizzBuzzTest.convert).foreach(println)
 
 object BuzzFizzTest extends Rule with FizzBuzz with Fizz with Buzz
-(0 to 15).foreach(BuzzFizzTest.convert)
+(0 to 15).map(BuzzFizzTest.convert).foreach(println)
 ```
 
 ---
@@ -195,14 +195,16 @@ sealed trait Tree
 case class Branch(left: Tree, right: Tree) extends Tree
 case class Leaf(value: Int) extends Tree
 
-def sum(tree:Tree): Int = tree match {
+def sum(tree: Tree): Int = tree match {
   case Branch(left, right) => sum(left) + sum(right)
   case Leaf(value) => value
 }
 
-val tree = Branch(
+val tree: Tree =
+  Branch(
     Branch(Leaf(1), Leaf(2)),
-    Branch(Leaf(3), Leaf(4)))
+    Branch(Leaf(3), Leaf(4))
+  )
 
 sum(tree)
 ```
