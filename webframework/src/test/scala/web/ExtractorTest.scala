@@ -14,7 +14,7 @@ class ExtractorTest extends FunSuite with Matchers {
     }
     
     request match {
-//      case Path("/") =>
+      case Path("/") =>
       case _ => fail()
     }
   }
@@ -25,7 +25,7 @@ class ExtractorTest extends FunSuite with Matchers {
     }
     
     request match {
-    //  case Path("/hello") =>
+      case Path("/hello") =>
       case _ => fail()
     }
   }
@@ -36,7 +36,7 @@ class ExtractorTest extends FunSuite with Matchers {
     }
     
     request match {
-    //  case Method(method) => method should be === request.getMethod
+      case Method(method) => method should be === request.getMethod
       case _ => fail()
     }
   }
@@ -47,7 +47,7 @@ class ExtractorTest extends FunSuite with Matchers {
     }
     
     request match {
-    //  case GET() =>
+      case GET() =>
       case _ => fail() 
     }
   }
@@ -58,7 +58,7 @@ class ExtractorTest extends FunSuite with Matchers {
     }
     
     request match {
-    //  case POST() =>
+      case POST() =>
       case _ => fail()
     }
   }
@@ -66,7 +66,7 @@ class ExtractorTest extends FunSuite with Matchers {
   test("Parts extractor"){
     
     "/scala/kurs/web/framework" match {
-    //  case Parts("scala", "kurs", "web", "framework") =>
+      case Parts("scala", "kurs", "web", "framework") =>
       case _ => fail()
     }    
   }
@@ -83,7 +83,7 @@ class ExtractorTest extends FunSuite with Matchers {
     }
     
     request match {
-    //  case Params(p) => p should be === params.mapValues(_.toSeq)
+      case Params(p) => p should be === params.mapValues(_.toSeq)
       case _ => fail()
     }
   }
@@ -103,7 +103,7 @@ class ExtractorTest extends FunSuite with Matchers {
       }
     
     request match {
-    //  case Headers(h) => h should be === headers
+      case Headers(h) => h should be === headers
       case _ => fail()
     }
   }
