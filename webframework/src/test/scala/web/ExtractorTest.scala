@@ -2,11 +2,11 @@ package web
 
 import java.util
 
-import org.scalatest.FunSuite
+import org.scalatest.{FunSuite, Matchers}
 import org.eclipse.jetty.server.Request
 import javax.servlet.http.HttpServletRequest
 
-class ExtractorTest extends FunSuite {
+class ExtractorTest extends FunSuite with Matchers {
   
   test("Path matcher /"){
     val request:HttpServletRequest = new Request{
