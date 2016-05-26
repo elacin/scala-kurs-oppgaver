@@ -267,11 +267,3 @@ implicit def plusMinus(i: Int) = new PlusMinus(int)
 5 +- 2
 //Range(3, 4, 5, 6, 7)
 ```
-
----
-
-## Oppgavetid :-)
-
-Skriv ditt eget testrammeverk!
-
-[https://github.com/arktekk/scala-kurs-oppgaver/tree/master/testframework](https://github.com/arktekk/scala-kurs-oppgaver/tree/master/testframework)

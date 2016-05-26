@@ -508,9 +508,3 @@ class Stuff {
 ```scala
 val stuff: Option[String] = Option(stuff.getIt)
 ```
-
----
-
-## oppgavetid ##
-[https://github.com/arktekk/scala-kurs-oppgaver/tree/master/buzzword](https://github.com/arktekk/scala-kurs-oppgaver/tree/master/buzzword)
-

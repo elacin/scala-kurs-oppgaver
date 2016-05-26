@@ -159,10 +159,3 @@ def sieve(s: Stream[Int]): Stream[Int] =
 
 def primes = sieve(Stream.from(2))
 ```
-
----
-
-## Oppgavetid :-)
-Implementer metodene i `List` selv
-
-[https://github.com/arktekk/scala-kurs-oppgaver/tree/master/list](https://github.com/arktekk/scala-kurs-oppgaver/tree/master/list)

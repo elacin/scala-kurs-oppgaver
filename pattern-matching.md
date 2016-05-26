@@ -594,10 +594,3 @@ for{
   world <- b
 } yield hello + " " + world
 ```
-
----
-
-# Oppgavetid :-) #
-Skriv ditt eget webrammeverk! (thats right)
-
-[webframework](https://github.com/arktekk/scala-kurs-oppgaver/tree/master/webframework)
